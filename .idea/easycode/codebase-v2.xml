@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/config/cloudinary.js;/Users/mac/WebstormProjects/store-server/middleware/auth.js;/Users/mac/WebstormProjects/store-server/middleware/multer.js;/Users/mac/WebstormProjects/store-server/models/Product.js;/Users/mac/WebstormProjects/store-server/models/User.js;/Users/mac/WebstormProjects/store-server/routes/auth.js;/Users/mac/WebstormProjects/store-server/routes/products.js;/Users/mac/WebstormProjects/store-server/package-lock.json;/Users/mac/WebstormProjects/store-server/package.json;/Users/mac/WebstormProjects/store-server/server.js" />
+  </component>
+</project>
