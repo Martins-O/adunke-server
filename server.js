@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 // Database Connection and Admin Initialization
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI, {
+        await mongoose.connect(process.env.DATABASE_URL || process.env.MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -78,8 +78,10 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes);
 console.log("products:");
-app.use('/api/auth', authRoutes);
-
+app.use('/api/auth', (req, res, next) => {
+    console.log(`Auth request: ${req.method} ${req.url}`);
+    next();
+}, authRoutes);
 // 404 Handler
 app.use((req, res, next) => {
     res.status(404).json({

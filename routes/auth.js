@@ -63,11 +63,15 @@ const loginLimiter = rateLimit({
 router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
+        console.log(`Attempt to login with username: ${username}`); // Debug log
         const user = await User.findOne({ username }).select('+password');
+        console.log(`Found user: ${user}`); // Debug log
 
         if (!user || !user.isActive || !(await user.comparePassword(password))) {
+            console.log(`Login failed for ${username}`); // Debug log
             return res.status(400).json({ message: 'Invalid credentials' });
         }
+        console.log(`User ${username} logged in successfully`); // Debug log
 
         const token = jwt.sign(
             { id: user._id, username: user.username, role: user.role },
