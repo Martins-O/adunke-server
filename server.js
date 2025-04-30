@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000', // just in case
-    'https://adunke-client.vercel.app/' // replace with your actual Vercel URL
+    'https://adunke-client.vercel.app' // replace with your actual Vercel URL
 ];
 app.use(helmet());
 app.use(cors({
