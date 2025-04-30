@@ -79,12 +79,20 @@ const initializeAdmin = async () => {
 connectDB();
 
 // Routes
-app.get('/', (req, res) => {
-    res.json({
-        message: 'Welcome to Clothing Store API',
-        version: '1.0.0',
-        status: 'running'
-    });
+app.get('/ping', (req, res) => {
+    console.log(`[Ping] ${new Date().toISOString()}`);
+    const secret = req.query.secret;
+    if (secret !== process.env.PING_SECRET) {
+        console.warn(`[Ping FAIL] Invalid token from ${req.ip}`);
+        return res.status(403).json({message: 'Forbidden!'});
+    } else {
+        console.log(`[Ping OK] ${req.ip} - ${new Date().toISOString()}`);
+        res.status(200).json({
+            message: 'Welcome to Adunke Clothing Store API',
+            version: '1.0.0',
+            status: 'running'
+        });
+    }
 });
 
 app.use('/api/products', productRoutes);
