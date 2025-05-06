@@ -80,7 +80,7 @@ connectDB();
 
 // Routes
 app.get('/ping', (req, res) => {
-    const secret = req.query.secret || req.headers['x-ping-secret'];
+    const secret = (process.env.PING_SECRET || '').trim();
     const envSecret = (process.env.PING_SECRET || '').trim();
 
     console.log(`[Ping] ${new Date().toISOString()}`);
