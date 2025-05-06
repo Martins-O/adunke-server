@@ -80,26 +80,26 @@ connectDB();
 
 // Routes
 app.get('/ping', (req, res) => {
-    console.log(`Full request URL: ${req.originalUrl}`);
-    console.log('Query params:', req.query);
-    const secret = req.query.secret;
-    const envSecret = process.env.PING_SECRET;
+    const secret = req.query.secret || req.headers['x-ping-secret'];
+    const envSecret = (process.env.PING_SECRET || '').trim();
 
     console.log(`[Ping] ${new Date().toISOString()}`);
     console.log(`Request Secret: ${secret}`);
     console.log(`Expected Secret (from env): ${envSecret}`);
+    console.log(`Query params:`, req.query);
+    console.log(`Headers:`, req.headers);
 
-    if (secret !== envSecret) {
+    if ((secret || '').trim() !== envSecret) {
         console.warn(`[Ping FAIL] Invalid token from ${req.ip}`);
         return res.status(403).json({ message: 'Forbidden!' });
-    } else {
-        console.log(`[Ping OK] ${req.ip} - ${new Date().toISOString()}`);
-        return res.status(200).json({
-            message: 'Welcome to Adunke Clothing Store API',
-            version: '1.0.0',
-            status: 'running'
-        });
     }
+
+    console.log(`[Ping OK] ${req.ip} - ${new Date().toISOString()}`);
+    return res.status(200).json({
+        message: 'Welcome to Adunke Clothing Store API',
+        version: '1.0.0',
+        status: 'running'
+    });
 });
 
 app.use('/api/products', productRoutes);
