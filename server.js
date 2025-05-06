@@ -80,6 +80,8 @@ connectDB();
 
 // Routes
 app.get('/ping', (req, res) => {
+    console.log(`Full request URL: ${req.originalUrl}`);
+    console.log('Query params:', req.query);
     const secret = req.query.secret;
     const envSecret = process.env.PING_SECRET;
 
