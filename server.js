@@ -80,14 +80,19 @@ connectDB();
 
 // Routes
 app.get('/ping', (req, res) => {
-    console.log(`[Ping] ${new Date().toISOString()}`);
     const secret = req.query.secret;
-    if (secret !== process.env.PING_SECRET) {
+    const envSecret = process.env.PING_SECRET;
+
+    console.log(`[Ping] ${new Date().toISOString()}`);
+    console.log(`Request Secret: ${secret}`);
+    console.log(`Expected Secret (from env): ${envSecret}`);
+
+    if (secret !== envSecret) {
         console.warn(`[Ping FAIL] Invalid token from ${req.ip}`);
-        return res.status(403).json({message: 'Forbidden!'});
+        return res.status(403).json({ message: 'Forbidden!' });
     } else {
         console.log(`[Ping OK] ${req.ip} - ${new Date().toISOString()}`);
-        res.status(200).json({
+        return res.status(200).json({
             message: 'Welcome to Adunke Clothing Store API',
             version: '1.0.0',
             status: 'running'
